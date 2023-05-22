@@ -2,17 +2,28 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BbDinner.Application.Common.Interfaces.Auth;
+using BbDinner.Application.Common.Interfaces.Services;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BbDinner.Infrastrucutre.Auth;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
+  private readonly IDateTimeProvider _dateTimeProvider;
+  private readonly JwtSettings _jwtSettings;
+
+  public JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions)
+  {
+    _dateTimeProvider = dateTimeProvider;
+    _jwtSettings = jwtOptions.Value;
+  }
+
   public string GenerateToken(Guid userId, string firstName, string lastName)
   {
     var signingCredentials =
       new SigningCredentials(
-        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secret-key-super-secret-key")),
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
         SecurityAlgorithms.HmacSha256
       );
 
@@ -24,8 +35,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };
 
-    var securityToken = new JwtSecurityToken("BbDinner",
-      expires: DateTime.Now.AddHours(2),
+    var securityToken = new JwtSecurityToken(_jwtSettings.Issuer,
+      expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
       claims: claims,
       signingCredentials: signingCredentials);
 
