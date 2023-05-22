@@ -2,7 +2,7 @@ POST http://localhost:5047/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Az",
+  "firstName": "Azdfds",
   "lastName": "Za",
   "email": "test@te",
   "password": "SecretPAss"

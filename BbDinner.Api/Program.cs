@@ -1,4 +1,5 @@
 using BbDinner.Application;
+using BbDinner.Infrastrucutre;
 
 var builder = WebApplication.CreateBuilder(args);
 {

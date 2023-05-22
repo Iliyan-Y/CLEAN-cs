@@ -4,7 +4,7 @@ using System.Text;
 using BbDinner.Application.Common.Interfaces.Auth;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BbDinner.Application.Auth;
+namespace BbDinner.Infrastrucutre.Auth;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
@@ -12,7 +12,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
   {
     var signingCredentials =
       new SigningCredentials(
-        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secret-key")),
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secret-key-super-secret-key")),
         SecurityAlgorithms.HmacSha256
       );
 
@@ -24,7 +24,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     };
 
-    var securityToken = new JwtSecurityToken("Me",
+    var securityToken = new JwtSecurityToken("BbDinner",
       expires: DateTime.Now.AddHours(2),
       claims: claims,
       signingCredentials: signingCredentials);

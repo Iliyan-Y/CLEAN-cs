@@ -6,6 +6,12 @@ public class AuthService : IAuthService
 {
   private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
+  public AuthService(IJwtTokenGenerator jwtTokenGenerator)
+  {
+    _jwtTokenGenerator = jwtTokenGenerator;
+  }
+
+
   public AuthResult Login(string Email, string Password)
   {
     return new AuthResult(Guid.NewGuid(), "FirstName", "LastName", Email, "Token");
