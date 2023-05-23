@@ -1,4 +1,9 @@
-#Setup 
+# CLEAN Architecture practise
+
+## Project diagram 
+![Diagram](./Diagram.png)
+
+# Setup 
 
 --skip 
 </br> 
