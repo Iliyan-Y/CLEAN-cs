@@ -20,7 +20,8 @@ public class AuthController : ControllerBase
   public IActionResult Register(RegisterRequest request)
   {
     var authResult = _authService.Register(request.FirstName, request.LastName, request.Email, request.Password);
-    var response = new AuthResponse(authResult.Id, authResult.FirstName, authResult.LastName, authResult.Email,
+    var response = new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName,
+      authResult.User.Email,
       authResult.token);
     return Ok(response);
   }
@@ -30,7 +31,8 @@ public class AuthController : ControllerBase
   public IActionResult Login(LoginRequest request)
   {
     var authResult = _authService.Login(request.Email, request.Password);
-    var response = new AuthResponse(authResult.Id, authResult.FirstName, authResult.LastName, authResult.Email,
+    var response = new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName,
+      authResult.User.Email,
       authResult.token);
     return Ok(response);
   }

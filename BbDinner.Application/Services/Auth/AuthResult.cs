@@ -1,9 +1,8 @@
+using BbDinner.Domain.Entities;
+
 namespace BbDinner.Application.Services.Auth;
 
 public record AuthResult(
-  Guid Id,
-  string FirstName,
-  string LastName,
-  string Email,
+  User User,
   string token
 );
